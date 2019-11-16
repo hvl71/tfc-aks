@@ -21,6 +21,11 @@ resource "azurerm_kubernetes_cluster" "maks" {
     os_disk_size_gb = 30
   }
 
+  #override these in the terraform cloud UI. Remember to setup client_secret as.. secret
+  #
+  #https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal
+  #https://www.terraform.io/docs/providers/azurerm/guides/service_principal_client_secret.html
+  
   service_principal {
     client_id     = "00000000-0000-0000-0000-000000000000"
     client_secret = "00000000000000000000000000000000"
