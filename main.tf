@@ -1,28 +1,22 @@
 # baseline from https://www.terraform.io/docs/providers/azurerm/r/kubernetes_cluster.html
 
-resource "azurerm_resource_group" "test" {
-  name     = "acctestRG1"
+#mrg = my resource group - must not exist already according to above page
+resource "azurerm_resource_group" "mrg" {
+  name     = "hvl71tfcaksrg"
   location = "East US"
 }
 
-resource "azurerm_kubernetes_cluster" "test" {
-  name                = "acctestaks1"
-  location            = azurerm_resource_group.test.location
-  resource_group_name = azurerm_resource_group.test.name
-  dns_prefix          = "acctestagent1"
+#maks = my aks
+resource "azurerm_kubernetes_cluster" "maks" {
+  name                = "hvltfcaks"
+  location            = azurerm_resource_group.mrg.location
+  resource_group_name = azurerm_resource_group.mrg.name
+  dns_prefix          = "hvltfcaks1"
 
   agent_pool_profile {
     name            = "default"
     count           = 1
     vm_size         = "Standard_D1_v2"
-    os_type         = "Linux"
-    os_disk_size_gb = 30
-  }
-
-  agent_pool_profile {
-    name            = "pool2"
-    count           = 1
-    vm_size         = "Standard_D2_v2"
     os_type         = "Linux"
     os_disk_size_gb = 30
   }
@@ -38,9 +32,9 @@ resource "azurerm_kubernetes_cluster" "test" {
 }
 
 output "client_certificate" {
-  value = "${azurerm_kubernetes_cluster.test.kube_config.0.client_certificate}"
+  value = "${azurerm_kubernetes_cluster.maks.kube_config.0.client_certificate}"
 }
 
 output "kube_config" {
-  value = "${azurerm_kubernetes_cluster.test.kube_config_raw}"
+  value = "${azurerm_kubernetes_cluster.maks.kube_config_raw}"
 }
