@@ -1,9 +1,20 @@
 # baseline from https://www.terraform.io/docs/providers/azurerm/r/kubernetes_cluster.html
 
+# Azure service principal:
+# #https://www.terraform.io/docs/providers/azurerm/guides/service_principal_client_secret.html
+
 #other inspirations
 #https://github.com/Azure/terraform-azurerm-aks
 #https://www.hashicorp.com/blog/kubernetes-cluster-with-aks-and-terraform/
 
+#specify Azure credentials in ~/.bashrc like this - override with your own values
+#export ARM_CLIENT_ID="00000000-0000-0000-0000-000000000000"
+#export ARM_CLIENT_SECRET="00000000-0000-0000-0000-000000000000"
+#export ARM_SUBSCRIPTION_ID="00000000-0000-0000-0000-000000000000"
+#export ARM_TENANT_ID="00000000-0000-0000-0000-000000000000"
+
+#the azurerm uses the above settings to authenticate
+provider "azurerm" {}
 
 #mrg = my resource group - must not exist already according to above page
 resource "azurerm_resource_group" "mrg" {
@@ -26,13 +37,11 @@ resource "azurerm_kubernetes_cluster" "maks" {
     os_disk_size_gb = 30
   }
 
-
-  
-
-  #override these in the terraform cloud UI. Remember to setup client_secret as.. secret
-  #
-  #https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal
-  #https://www.terraform.io/docs/providers/azurerm/guides/service_principal_client_secret.html
+#https://www.terraform.io/docs/configuration/variables.html
+#set these 2 settings as environment settings by prefixing with TF_VAR_
+#that is override values like this:
+#export TF_VAR_client_id="00000000-0000-0000-0000-000000000000"
+#export TF_VAR_client_secret="00000000000000000000000000000000"
 
   service_principal {
     client_id     = "00000000-0000-0000-0000-000000000000"
