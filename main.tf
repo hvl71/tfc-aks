@@ -37,20 +37,20 @@ resource "azurerm_kubernetes_cluster" "maks" {
     os_disk_size_gb = 30
   }
 
-agent_pool_profile {
-    name            = "win"
-    count           = 2
-    vm_size         = "Standard_D1_v2"
-    os_type         = "Windows"
-    os_disk_size_gb = 30
-  }
+#agent_pool_profile {
+#    name            = "win"
+#    count           = 2
+#    vm_size         = "Standard_D1_v2"
+#    os_type         = "Windows"
+#    os_disk_size_gb = 30
+#  }
 
  network_profile {
    network_plugin   = "azure"
  } 
 
 #admin_username and admin_password settings are specified as environment variables
- windows_profile {}
+# windows_profile {}
 
 #https://www.terraform.io/docs/configuration/variables.html
 #set these 2 settings as environment settings by prefixing with TF_VAR_
