@@ -51,7 +51,7 @@ agent_pool_profile {
 
 #admin_username and admin_password settings are specified as environment variables
  windows_profile {
-   admin_username ="azureuser01"
+   #admin_username ="azureuser01"
  }
 
 #https://www.terraform.io/docs/configuration/variables.html
