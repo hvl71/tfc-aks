@@ -12,6 +12,20 @@
 #export ARM_CLIENT_SECRET="00000000-0000-0000-0000-000000000000"
 #export ARM_SUBSCRIPTION_ID="00000000-0000-0000-0000-000000000000"
 #export ARM_TENANT_ID="00000000-0000-0000-0000-000000000000"
+#export TF_VAR_client_id="000000000000000000000000"
+#export TF_VAR_client_secret="0000000000000000000000"
+#export TF_VAR_admin_username="0000000000000000000000"
+#export TF_VAR_admin_password="0000000000000000000000"
+
+#in TFC environment section specify the same 8 values as environment variables - no quotes in value field as opposed to ~/.bashrc!
+#ARM_CLIENT_ID=00000000-0000-0000-0000-000000000000
+#ARM_CLIENT_SECRET=00000000-0000-0000-0000-000000000000
+#ARM_SUBSCRIPTION_ID=00000000-0000-0000-0000-000000000000
+#ARM_TENANT_ID=00000000-0000-0000-0000-000000000000
+#TF_VAR_client_id=000000000000000000000000
+#TF_VAR_client_secret=0000000000000000000000
+#TF_VAR_admin_username=0000000000000000000000
+#TF_VAR_admin_password=0000000000000000000000
 
 #the azurerm uses the above settings to authenticate
 provider "azurerm" {}
@@ -51,6 +65,7 @@ agent_pool_profile {
 
 #admin_username and admin_password settings are specified as environment variables
  windows_profile {
+   #these variables must be declared (but not set - unless insensitive default values) in variables.tf
     admin_username = var.admin_username
     admin_password = var.admin_password
    #admin_username ="azureuser01"
