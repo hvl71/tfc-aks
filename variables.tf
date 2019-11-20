@@ -12,5 +12,4 @@ variable "client_id" {
 }
 
 variable "client_secret" {
-  description "This is the client_secret"
 }
