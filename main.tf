@@ -33,16 +33,16 @@ provider "azurerm" {}
 
 #mrg = my resource group - must not exist already according to above page
 resource "azurerm_resource_group" "hvl" {
-  name     = "hvl71tfcaksrg"
+  name     = "hvl71tfcaksrg02"
   location = "East US"
 }
 
 #maks = my aks
 resource "azurerm_kubernetes_cluster" "hvl" {
-  name                = "hvltfcaks"
+  name                = "hvltfcaks02"
   location            = "${azurerm_resource_group.hvl.location}"
   resource_group_name = "${azurerm_resource_group.hvl.name}"
-  dns_prefix          = "hvltfcaks1"
+  dns_prefix          = "hvltfcaks02"
 
   agent_pool_profile {
     name            = "default"
