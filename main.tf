@@ -72,14 +72,18 @@ agent_pool_profile {
  }
 
 #https://www.terraform.io/docs/configuration/variables.html
-#set these 2 settings as environment settings by prefixing with TF_VAR_
+#set these 2 settings as environment settings by prefixing with TF_VAR_ in TFC
 #that is override values like this:
 #export TF_VAR_client_id="00000000-0000-0000-0000-000000000000"
 #export TF_VAR_client_secret="00000000000000000000000000000000"
+#also declare the 2 variables in variables.tf
+#the values were originally created by
+#az account list #to get subscription ID (if there is only one)
+#az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/<subscription-ID>"
 
   service_principal {
-    client_id     = "00000000-0000-0000-0000-000000000000"
-    client_secret = "00000000000000000000000000000000"
+    client_id     = var.client_id
+    client_secret = var.client_secret
   }
 
   tags = {
