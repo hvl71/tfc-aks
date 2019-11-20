@@ -1,4 +1,5 @@
 # baseline from https://www.terraform.io/docs/providers/azurerm/r/kubernetes_cluster.html
+# altertive: https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html
 
 # Azure service principal:
 # #https://www.terraform.io/docs/providers/azurerm/guides/service_principal_client_secret.html
@@ -31,16 +32,16 @@
 provider "azurerm" {}
 
 #mrg = my resource group - must not exist already according to above page
-resource "azurerm_resource_group" "mrg" {
+resource "azurerm_resource_group" "hvl" {
   name     = "hvl71tfcaksrg"
   location = "East US"
 }
 
 #maks = my aks
-resource "azurerm_kubernetes_cluster" "maks" {
+resource "azurerm_kubernetes_cluster" "hvl" {
   name                = "hvltfcaks"
-  location            = azurerm_resource_group.mrg.location
-  resource_group_name = azurerm_resource_group.mrg.name
+  location            = "${azurerm_resource_group.hvl.location}"
+  resource_group_name = "${azurerm_resource_group.hvl.name}"
   dns_prefix          = "hvltfcaks1"
 
   agent_pool_profile {
@@ -66,8 +67,8 @@ agent_pool_profile {
 #admin_username and admin_password settings are specified as environment variables
  windows_profile {
    #these variables must be declared (but not set - unless insensitive default values) in variables.tf
-    admin_username = var.admin_username
-    admin_password = var.admin_password
+    admin_username = "${var.admin_username}"
+    admin_password = "${var.admin_password}"
    #admin_username ="azureuser01"
  }
 
@@ -82,8 +83,8 @@ agent_pool_profile {
 #az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/<subscription-ID>"
 
   service_principal {
-    client_id     = var.client_id
-    client_secret = var.client_secret
+    client_id     = "${var.client_id}"
+    client_secret = "${var.client_secret}"
   }
 
   tags = {
@@ -92,9 +93,9 @@ agent_pool_profile {
 }
 
 output "client_certificate" {
-  value = "${azurerm_kubernetes_cluster.maks.kube_config.0.client_certificate}"
+  value = "${azurerm_kubernetes_cluster.hvl.kube_config.0.client_certificate}"
 }
 
 output "kube_config" {
-  value = "${azurerm_kubernetes_cluster.maks.kube_config_raw}"
+  value = "${azurerm_kubernetes_cluster.hvl.kube_config_raw}"
 }
