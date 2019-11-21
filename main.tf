@@ -43,6 +43,7 @@ resource "azurerm_kubernetes_cluster" "hvl" {
   location            = "${azurerm_resource_group.hvl.location}"
   resource_group_name = "${azurerm_resource_group.hvl.name}"
   dns_prefix          = "hvltfcaks03"
+  kubernetes_version  = "1.15.5"
 
   agent_pool_profile {
     name            = "default"
