@@ -33,44 +33,44 @@ provider "azurerm" {}
 
 #mrg = my resource group - must not exist already according to above page
 resource "azurerm_resource_group" "hvl" {
-  name     = "hvl71tfcaksrg02"
+  name     = "hvl71tfcaksrg03"
   location = "East US"
 }
 
 #maks = my aks
 resource "azurerm_kubernetes_cluster" "hvl" {
-  name                = "hvltfcaks02"
+  name                = "hvltfcaks03"
   location            = "${azurerm_resource_group.hvl.location}"
   resource_group_name = "${azurerm_resource_group.hvl.name}"
-  dns_prefix          = "hvltfcaks02"
+  dns_prefix          = "hvltfcaks03"
 
   agent_pool_profile {
     name            = "default"
     count           = 1
     vm_size         = "Standard_D1_v2"
     os_type         = "Linux"
-    os_disk_size_gb = 30
+    os_disk_size_gb = 30  
   }
 
-agent_pool_profile {
-    name            = "win"
-    count           = 2
-    vm_size         = "Standard_D1_v2"
-    os_type         = "Windows"
-    os_disk_size_gb = 30
-  }
+# agent_pool_profile {
+#    name            = "win"
+#    count           = 2
+#    vm_size         = "Standard_D1_v2"
+#    os_type         = "Windows"
+#    os_disk_size_gb = 30
+#  }
 
  network_profile {
    network_plugin   = "azure"
  } 
 
-#admin_username and admin_password settings are specified as environment variables
- windows_profile {
-   #these variables must be declared (but not set - unless insensitive default values) in variables.tf
-    admin_username = "${var.admin_username}"
-    admin_password = "${var.admin_password}"
-   #admin_username ="azureuser01"
- }
+# #admin_username and admin_password settings are specified as environment variables
+# windows_profile {
+#   #these variables must be declared (but not set - unless insensitive default values) in variables.tf
+#    admin_username = "${var.admin_username}"
+#    admin_password = "${var.admin_password}"
+#   #admin_username ="azureuser01"
+# }
 
 #https://www.terraform.io/docs/configuration/variables.html
 #set these 2 settings as environment settings by prefixing with TF_VAR_ in TFC
